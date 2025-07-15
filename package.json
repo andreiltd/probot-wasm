@@ -1,0 +1,35 @@
+{
+    "name": "probot-example",
+    "description": "An example project using probot",
+    "version": "1.0.0",
+    "author": "Tomasz Andrzejak <andreiltd@gmail.com>",
+    "license": "MIT",
+    "type": "module",
+    "main": "main.js",
+    "sideEffects": false,
+    "scripts": {
+        "bundle": "rollup -c ",
+        "build": "npm run bundle && componentize-js --wit wit -o dist/$npm_package_name.wasm dist/index.js",
+        "build:debug": "npm run bundle && componentize-js --enable-wizer-logging --use-debug-build --wit wit -o dist/$npm_package_name.wasm dist/bundle.js"
+    },
+    "dependencies": {
+        "probot": "^13.4.5"
+    },
+    "devDependencies": {
+        "@rollup/plugin-alias": "^5.1.1",
+        "@rollup/plugin-commonjs": "^28.0.6",
+        "@rollup/plugin-inject": "^5.0.5",
+        "@rollup/plugin-json": "^6.1.0",
+        "@rollup/plugin-node-resolve": "^16.0.1",
+        "@rollup/plugin-replace": "^6.0.2",
+        "@rollup/plugin-terser": "^0.4.4",
+        "eventemitter3": "^5.0.1",
+        "readable-stream": "^4.7.0",
+        "rollup": "^4.45.0",
+        "unenv": "npm:unenv-nightly@^2.0.0-20250625-132120-57fd97f"
+    },
+    "overrides": {
+        "readable-stream": "^4.7.0",
+        "bl": "^4.1.0"
+    }
+}
