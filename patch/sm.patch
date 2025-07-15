@@ -1,0 +1,43 @@
+diff --git a/builtins/web/performance.cpp b/builtins/web/performance.cpp
+index af2ff33..a663e1a 100644
+--- a/builtins/web/performance.cpp
++++ b/builtins/web/performance.cpp
+@@ -5,6 +5,11 @@ namespace {
+ using FpMilliseconds = std::chrono::duration<float, std::chrono::milliseconds::period>;
+ } // namespace
+ 
++extern "C" void perf_init_time_origin() {
++  builtins::web::performance::Performance::timeOrigin.emplace(
++      std::chrono::high_resolution_clock::now());
++}
++
+ namespace builtins {
+ namespace web {
+ namespace performance {
+diff --git a/runtime/engine.cpp b/runtime/engine.cpp
+index 4390707..b725fa5 100644
+--- a/runtime/engine.cpp
++++ b/runtime/engine.cpp
+@@ -190,6 +190,9 @@ void dump_promise_rejection(JSContext *cx, HandleValue reason, HandleObject prom
+   }
+ }
+ 
++// performance time origin initialization function
++extern "C" void __attribute__((weak)) perf_init_time_origin();
++
+ /* The class of the global object. */
+ static JSClass global_class = {"global", JSCLASS_GLOBAL_FLAGS, &JS::DefaultGlobalClassOps};
+ 
+@@ -345,9 +348,9 @@ bool init_js(const EngineConfig& config) {
+   opts->setForceFullParse();
+   scriptLoader = new ScriptLoader(ENGINE, opts, config.path_prefix);
+ 
+-  // TODO: restore in a way that doesn't cause a dependency on the Performance builtin in the core runtime.
+-  //   builtins::Performance::timeOrigin.emplace(
+-  //       std::chrono::high_resolution_clock::now());
++  if (perf_init_time_origin) {
++    perf_init_time_origin();
++  }
+ 
+   return true;
+ }
