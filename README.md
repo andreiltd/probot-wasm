@@ -8,8 +8,8 @@ This repo demonstrates creating a GitHub application using Probot and WebAssembl
 
 Before you begin, you'll need to create a new GitHub application and test repository following the Probot documentation:
 
-- [new-app][Create a new GitHub App]
-- [conf-app][Manually configure your GitHub App]
+- [Create a new GitHub App][new-app]
+- [Manually configure your GitHub App][conf-app]
 
 ## Configuration Checklist
 
@@ -120,3 +120,6 @@ curl -X POST 127.0.0.1:8080 \
 ![](assets/payload.png)
 
 **Note:** The `X-GitHub-Delivery` header value can be obtained from the same Recent Deliveries page where you copied the payload.
+
+[new-app]: https://probot.github.io/docs/development/#configuring-a-github-app
+[conf-app]: https://probot.github.io/docs/development/#manually-configuring-a-github-app
