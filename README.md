@@ -46,7 +46,7 @@ Apply the patches that fix issues with accessing `performance.timeOrigin` during
 
 ```console
 cd StarlingMonkey
-git apply < ../patch/sm.patch
+git apply < ../../probot-wasm/patch/sm.patch
 ```
 
 3. Build ComponentizeJS
@@ -81,7 +81,16 @@ npm link ../ComponentizeJS  # Adjust path as needed
 ```console
 npm install
 npm run build
-wasmtime serve -S common,http,inherit-network dist/probot-example.wasm
+```
+
+Copy your secrets to placeholder files in the `secrets` directory and then run:
+
+``` console
+wasmtime serve -S common,http,inherit-network \
+    --env APP_ID="$(cat secrets/app_id)" \
+    --env PRIVATE_KEY="$(cat secrets/private_key)" \
+    --env WEBHOOK_SECRET="$(cat secrets/webhook_secret)" \
+    dist/probot-example.wasm
 ```
 
 ## Testing Your Application
@@ -98,7 +107,7 @@ wasmtime serve -S common,http,inherit-network dist/probot-example.wasm
 
 2. Send the Test Request
 
-Use the following `curl` command to send the payload to your running container:
+Use the following `curl` command to send the payload to your running component:
 
 ```
 curl -X POST 127.0.0.1:8080 \

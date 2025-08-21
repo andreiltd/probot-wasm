@@ -29,8 +29,6 @@ export default async () => {
     "utf-8",
   );
 
-  const pkey = readFileSync("./private-key.pem", "utf-8");
-
   const { env } = defineEnv({
     nodeCompat: true,
     npmShims: true,
@@ -75,12 +73,6 @@ export default async () => {
           "const ID_START = /^[$_a-zA-Z]$/",
         "const ID_CONTINUE = /^[$\\u200c\\u200d\\p{ID_Continue}]$/u":
           "const ID_CONTINUE = /^[$_a-zA-Z0-9\\u200c\\u200d]$/",
-        // Inject private key
-        __WEBHOOK_SECRET__: JSON.stringify(
-          "RFevZu+Ei2rm98J/eI1uoyWtjEyVU1XimHvHbWbbCgc=",
-        ),
-        __PRIVATE_KEY__: JSON.stringify(pkey),
-        __APP_ID__: "1446795",
       }),
       alias({
         entries: aliasEntries,

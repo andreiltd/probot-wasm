@@ -10,7 +10,7 @@
     "scripts": {
         "bundle": "rollup -c ",
         "build": "npm run bundle && componentize-js --wit wit -o dist/$npm_package_name.wasm dist/index.js",
-        "build:debug": "npm run bundle && componentize-js --enable-wizer-logging --use-debug-build --wit wit -o dist/$npm_package_name.wasm dist/bundle.js"
+        "build:debug": "npm run bundle && componentize-js --use-debug-build --wit wit -o dist/$npm_package_name.wasm dist/index.js"
     },
     "dependencies": {
         "probot": "^13.4.5"

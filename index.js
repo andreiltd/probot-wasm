@@ -1,4 +1,5 @@
 import { Probot, ProbotOctokit } from "probot";
+import { getEnvironment } from 'wasi:cli/environment@0.2.3';
 
 addEventListener("fetch", (event) => {
   event.respondWith(handleRequest(event.request));
@@ -23,10 +24,13 @@ const app = async (app) => {
 
 
 async function handleRequest(request) {
+  const entries = getEnvironment();
+  const env = Object.fromEntries(entries);
+
   const probot = new Probot({
-    appId: __APP_ID__,
-    privateKey: __PRIVATE_KEY__,
-    secret: __WEBHOOK_SECRET__,
+    appId: env.APP_ID,
+    privateKey: env.PRIVATE_KEY,
+    secret: env.WEBHOOK_SECRET,
     Octokit: OctokitWithFetch,
     logLevel: "debug",
   });
